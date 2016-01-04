@@ -163,7 +163,7 @@ if __name__ == '__main__':
 
 下面我们将采用柱状图的形式来跟踪插入排序算法的轨迹。主要是试用Python的[matplotlib](http://old.sebug.net/paper/books/scipydoc/matplotlib_intro.html)和[numpy](http://old.sebug.net/paper/books/scipydoc/numpy_intro.html)两个package。第一个包主要是类似于Matlab画图，第二个包类似于Matlab的矩阵操作（数值计算）。所有说Python是一门功能比较丰富的编程语言。
 
-![希尔排序轨迹](shell.png)
+![希尔排序轨迹](images/shell.png)
 
 ``` python
 # -*- coding:utf-8 -*-
