@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 #! -*- coding:utf-8 -*-
 
+'''
+作者：Cyril
+时间：2016年1月5号
+归并排序：
+    非递归归并排序。
+'''
+
 import math
 
 

@@ -5,6 +5,9 @@
     递归归并排序。
 '''
 
+import numpy as np
+import matplotlib.pyplot as plt
+
 
 class Merge(object):
     '''
@@ -29,6 +32,12 @@ class Merge(object):
         '''
         self.array = array
         self.compare = compare
+        self.mergeTimes = 0
+        self.x = np.arange(len(array))
+        fig, axes = plt.subplots(ncols=1, nrows=8)
+        self.axesTulpe = axes.ravel()
+        self.axesTulpe[self.mergeTimes].bar(self.x, np.array(array), 0.5)
+        self.mergeTimes += 1
 
     def merge(self, lo, mid, hi):
         '''
@@ -75,6 +84,9 @@ class Merge(object):
         self.sorted(lo, mid)
         self.sorted(mid + 1, hi)
         self.merge(lo, mid, hi)
+        if (hi - lo) > 24:
+            self.axesTulpe[self.mergeTimes].bar(self.x, np.array(array), 0.5)
+            self.mergeTimes += 1
 
     def mergeSorted(self):
         '''
@@ -82,9 +94,12 @@ class Merge(object):
             调用self.sorted函数，设置好数组的长度
         '''
         self.sorted(0, len(self.array) - 1)
+        plt.show()
 
 if __name__ == '__main__':
-    array = [10, 11, 12, 0, 1, 2, 100, 89, 47]
+    array = list(np.random.randint(0, 200, (1, 200))[0])
+    # print array
     merge = Merge(array)
     merge.mergeSorted()
-    print array
+    print merge.mergeTimes
+    # print array

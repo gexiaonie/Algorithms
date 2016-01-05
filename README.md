@@ -161,7 +161,7 @@ if __name__ == '__main__':
     print array
 ```
 
-下面我们将采用柱状图的形式来跟踪插入排序算法的轨迹。主要是试用Python的[matplotlib](http://old.sebug.net/paper/books/scipydoc/matplotlib_intro.html)和[numpy](http://old.sebug.net/paper/books/scipydoc/numpy_intro.html)两个package。第一个包主要是类似于Matlab画图，第二个包类似于Matlab的矩阵操作（数值计算）。所有说Python是一门功能比较丰富的编程语言。
+下面我们将采用柱状图的形式来跟踪插入排序算法的轨迹。主要是试用Python的[matplotlib](http://old.sebug.net/paper/books/scipydoc/matplotlib_intro.html)和[numpy](http://old.sebug.net/paper/books/scipydoc/numpy_intro.html)两个package。第一个包主要是类似于Matlab画图，第二个包类似于Matlab的矩阵操作（数值计算）。所以说Python是一门功能比较丰富的编程语言。
 
 ![希尔排序轨迹](images/shell.png)
 
@@ -212,7 +212,152 @@ if __name__ == '__main__':
 
 # 冒泡排序
 
+冒泡排序是最经典的排序之一，它重复地走访过要排序的数列，一次比较两个元素，
+如果他们的顺序错误就把他们交换过来。走访数列的工作是重复地进行直到没有再需要交换，
+也就是说该数列已经排序完成。这个算法的名字由来是因为越大的元素会经由交换慢慢“浮”
+到数列的顶端，故名冒泡排序。
+
+由于排序算法比较常用，接触过排序算法的人基本上都知道冒泡排序，这里面就不给出排序轨迹了。
+
+``` python
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+
+'''
+冒泡排序：
+    冒泡排序是最经典的排序之一，它重复地走访过要排序的数列，一次比较两个元素，
+如果他们的顺序错误就把他们交换过来。走访数列的工作是重复地进行直到没有再需要交换，
+也就是说该数列已经排序完成。这个算法的名字由来是因为越大的元素会经由交换慢慢“浮”
+到数列的顶端，故名冒泡排序。
+'''
+
+
+def bubbleSorted(array, compare=cmp):
+    count = len(array)
+
+    for i in range(0, count - 1):
+        for j in range(0, count - 1 - i):
+            if compare(array[j], array[j + 1]) > 0:
+                array[j], array[j + 1] = array[j + 1], array[j]
+if __name__ == '__main__':
+    array = [3, 4, 10, 1, 9, 5]
+    bubbleSorted(array, lambda x, y: cmp(y, x))
+    print array
+```
+
 # 归并排序
+
+要将一个数组排序，可以先（递归地）将它分成两半分别排序，然后将结果归并起来。归并，即将两个有序的数组归并成一个有序数组。你将会看到，归并排序最吸引人的性质是它能够保证将任意长度为N的数组排序时间和NlogN成正比；它主要的缺点则是它需要额外空间和N成正比。归并排序一种是采用自顶向下的递归算法，一种是采用自底向上的非递归算法。
+
+## 自顶向下的递归算法
+
+这种递归归并算法是应用高效算法设计 _中分治思想_ 的最典型的例子之一。下面递归代码是归纳证明算法能够将数组排序的基础，如果它能将两个子数组排序，它就能通过归并两个子数组来将整个数组排序。其实，递归到最后一层就是两个只含有一个元素的子数组进行排序。只含有一个元素的子数组当然可以直接通过归并来排序啦。
+
+``` python
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+'''
+归并排序：
+    递归归并排序。
+'''
+
+
+class Merge(object):
+    '''
+    归并排序
+    参数：
+        array:是需要排序的数组
+        compare:是比较函数，默认使用系统自带的cmp
+    例子：
+        array = [10 11 4 12 9 1]
+        merge = Merge(array)
+        merge.mergeSorted()
+        array will be [1 4 9 10 11 12]
+
+    '''
+
+    def __init__(self, array, compare=cmp):
+        '''
+        归并排序
+        参数：
+            array:是需要排序的数组
+            compare:是比较函数，默认使用系统自带的cmp
+        '''
+        self.array = array
+        self.compare = compare
+
+    def merge(self, lo, mid, hi):
+        '''
+        归并插入：
+            将array[lo...mid]和array[mid+1...hi](是有序的数组)，归并成一个有序的数组。
+            并将结果存在原array数组里面
+        参数：
+            lo:是数组的低索引
+            mid:是数组的中点
+            hi：数组的高索引
+        '''
+        indexOfLo = 0
+        indexOfHi = 0
+        left = self.array[lo:mid + 1]
+        right = self.array[mid + 1:hi + 1]
+        lenOfLeft = len(left)
+        lenOfRight = len(right)
+
+        for i in range(lo, hi + 1):
+            if indexOfLo >= lenOfLeft:
+                self.array[i] = right[indexOfHi]
+                indexOfHi += 1
+            elif indexOfHi >= lenOfRight:
+                array[i] = left[indexOfLo]
+                indexOfLo += 1
+            elif self.compare(left[indexOfLo], right[indexOfHi]) == -1:
+                array[i] = left[indexOfLo]
+                indexOfLo += 1
+            else:
+                array[i] = right[indexOfHi]
+                indexOfHi += 1
+
+    def sorted(self, lo, hi):
+        '''
+        递归排序：
+            使用中分治思想，递归知道需要将两个元素进行归并插入
+        参数:
+            lo:数组低索引
+            hi:数组高索引
+        '''
+        mid = int((lo + hi) / 2)
+        if hi <= lo:
+            return
+        self.sorted(lo, mid)
+        self.sorted(mid + 1, hi)
+        self.merge(lo, mid, hi)
+
+    def mergeSorted(self):
+        '''
+        归并排序：
+            调用self.sorted函数，设置好数组的长度
+        '''
+        self.sorted(0, len(self.array) - 1)
+
+if __name__ == '__main__':
+    array = [10, 11, 12, 0, 1, 2, 100, 89, 47]
+    merge = Merge(array)
+    merge.mergeSorted()
+    print array
+```
+
+![自顶向下的递归归并排序](images/MergeUD.png)
+
+图 4. 自顶向下的递归归并排序轨迹
+
+由于篇幅的限制，这部分代码我在这里就不贴出来了，有兴趣可以到我的Github查看源代码。
+
+## 自底向上的非递归算法
+
+从上面的自顶向下的递归排序可以看出，是通过递归先把数组一分为二，然后再将子数组一分为二。最好归并的是子数组为一个元素的数组。那么还有另一种方法就是我们第一步就开始归并两个只有一个元素的子数组，然后归并已经有序很有两个元素的子数组，最好整个数组通过归并成有序。
+
+
+
 
 # 快速排序
 
