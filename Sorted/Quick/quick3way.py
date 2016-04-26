@@ -2,28 +2,28 @@
 # -*- coding-utf-8 -*-
 
 
-def quickSorted(array, lo, hi, compare=cmp):
+def quick_sorted(seq, lo, hi, compare=cmp):
     if hi <= lo:
         return
     lt = lo
     i = lo + 1
     gt = hi
-    v = array[lo]
+    v = seq[lo]
     while i <= gt:
-        cmpValue = compare(array[i], v)
-        if cmpValue < 0:
-            array[i], array[lt] = array[lt], array[i]
+        cmp_value = compare(seq[i], v)
+        if cmp_value < 0:
+            seq[i], seq[lt] = seq[lt], seq[i]
             i += 1
             lt += 1
-        elif cmpValue > 0:
-            array[i], array[gt] = array[gt], array[i]
+        elif cmp_value > 0:
+            seq[i], seq[gt] = seq[gt], seq[i]
             gt -= 1
         else:
             i += 1
-    quickSorted(array, lo, lt - 1)
-    quickSorted(array, gt + 1, hi)
+    quick_sorted(seq, lo, lt - 1)
+    quick_sorted(seq, gt + 1, hi)
 
 if __name__ == '__main__':
     array = [1, 3, 2, 2, 9, 4, 4, 10, 6]
-    quickSorted(array, 0, len(array) - 1)
+    quick_sorted(array, 0, len(array) - 1)
     print array

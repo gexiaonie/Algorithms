@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
 
-'''
+"""
 归并排序:
     将两个有序的序列合并成一个有序的序列
-'''
+"""
 
 import math
 
@@ -28,27 +28,26 @@ def merge(array1, array2, compare=cmp):
             j += 1
     return array
 
-sortedArray = []
+
+g_array = []    # global variable
 
 
-def mergeArray(array, lo, mid, hi):
-
-
-def mergeSorted(array, compare=cmp):
+def merge_sorted(array, compare=cmp):
     count = len(array)
     mid = int(math.ceil(count / 2.0))
-    global sortedArray
+    global g_array
     if count == 1:
         return
     left = array[0:mid]
     right = array[mid:count]
-    mergeSorted(left, compare)
-    mergeSorted(right, compare)
-    print "sortedArray:" + str(sortedArray)
+    merge_sorted(left, compare)
+    merge_sorted(right, compare)
+    print "sortedArray:" + str(g_array)
     print "left" + str(left)
     print 'right:' + str(right)
-    sortedArray = merge(sortedArray, left)
-    sortedArray = merge(sortedArray, right)
+    g_array = merge(g_array, left)
+    g_array = merge(g_array, right)
+
 
 if __name__ == '__main__':
     '''
@@ -58,5 +57,5 @@ if __name__ == '__main__':
     print array
     '''
     array3 = [10, 11, 12, 3, 2, 1]
-    mergeSorted(array3)
+    merge_sorted(array3)
     # print sortedArray

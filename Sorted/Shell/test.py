@@ -1,5 +1,5 @@
-from ShellWithChart import shellSorted
+from ShellWithChart import shell_sorted
 import numpy as np
 
 array = np.random.randint(0, 200, (1, 100))[0]
-shellSorted(array)
+shell_sorted(array)

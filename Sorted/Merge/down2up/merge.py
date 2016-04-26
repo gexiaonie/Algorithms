@@ -1,56 +1,49 @@
 #!/usr/bin/env python
-#! -*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
-'''
+"""
 作者：Cyril
 时间：2016年1月5号
 归并排序：
     非递归归并排序。
-'''
-
-import math
+"""
 
 
-def merge(array, lo, mid, hi, compare=cmp):
-    left = array[lo:mid]
-    right = array[mid:hi + 1]
-    leftLen = len(left)
-    rightLen = len(right)
-    indexOfLo = 0
-    indexOfHi = 0
+def merge(sequence, lo, mid, hi, compare=cmp):
+    left = sequence[lo:mid]
+    right = sequence[mid:hi + 1]
+    left_len = len(left)
+    right_len = len(right)
+    index_lo = 0
+    index_hi = 0
     for i in range(lo, hi + 1):
-        if indexOfHi >= rightLen:
-            array[i] = left[indexOfLo]
-            indexOfLo += 1
-        elif indexOfLo >= leftLen:
-            array[i] = right[indexOfHi]
-        elif compare(left[indexOfLo], right[indexOfHi]) == -1:
-            array[i] = left[indexOfLo]
-            indexOfLo += 1
+        if index_hi >= right_len:
+            sequence[i] = left[index_lo]
+            index_lo += 1
+        elif index_lo >= left_len:
+            sequence[i] = right[index_hi]
+        elif compare(left[index_lo], right[index_hi]) == -1:
+            sequence[i] = left[index_lo]
+            index_lo += 1
         else:
-            array[i] = right[indexOfHi]
-            indexOfHi += 1
+            sequence[i] = right[index_hi]
+            index_hi += 1
 
 
-def min(number1, number2):
-    if number1 > number2:
-        return number2
-    else:
-        return number1
-
-
-def mergeSorted(array):
-    arrayLen = len(array)
+def merge_sorted(sequence):
+    length = len(sequence)
     step = 1
-    while step < arrayLen:
+    while step < length:
         lo = 0
-        while lo < arrayLen - 1:
-            hi = min(lo + step + step - 1, arrayLen - 1)
+        while lo < length - 1:
+            hi = min(lo + step + step - 1, length - 1)
             mid = lo + step
-            merge(array, lo, mid, hi)
+            merge(sequence, lo, mid, hi)
             lo = hi + 1
-        step = step * 2
+        step *= 2
+
+        
 if __name__ == '__main__':
     array = [10, 11, 12, 1, 2, 3]
-    mergeSorted(array)
+    merge_sorted(array)
     print array

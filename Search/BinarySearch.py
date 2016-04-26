@@ -1,25 +1,30 @@
 # -*- coding:utf-8 -*-
-class BinarySearch(object):
-    """docstring for BinarySearch"""
 
-    def rank(self, keyValue, source):
-    	'二分查找法'
-        lowIndex = 0
-        highIndex = len(source) - 1
-        while lowIndex <= highIndex:
-            midIndex = (lowIndex + highIndex) / 2
-            if keyValue < source[midIndex]:
-                highIndex = midIndex - 1
-            elif keyValue > source[midIndex]:
-                lowIndex = midIndex + 1
-            else:
-                return midIndex
-        return -1
+
+def rank(key, source):
+
+    """
+    :param key: find key from source
+    :param source: find key from source
+    :return: index of source. if key is not in source , return -1
+    """
+
+    low_index = 0
+    high_index = len(source) - 1
+    while low_index <= high_index:
+        mid_index = (low_index + high_index) / 2
+        if key < source[mid_index]:
+            high_index = mid_index - 1
+        elif key > source[mid_index]:
+            low_index = mid_index + 1
+        else:
+            return mid_index
+    return -1
+
 
 if __name__ == '__main__':
-    binarySearch = BinarySearch()
     data = [1, 5, 9, 2, 30, 8]
     sortedData = sorted(data)
     print sortedData
-    print binarySearch.rank(9, sortedData)
-    help(binarySearch.rank)
+    print rank(9, sortedData)
+    help(rank)
