@@ -1,16 +1,14 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
+"""
+作者：Cyril
+时间：2016年1月3号
+
+插入排序：将数据分为两边，左边始终有序。每次插入要相应的移动左边数组。
+"""
 
 
 def insert_sorted(sequence, compare=cmp):
-
-    """
-    作者：Cyril
-    时间：2016年1月3号
-
-    插入排序：将数据分为两边，左边始终有序。每次插入要相应的移动左边数组。
-    """
-
     count = len(sequence)
     for i in range(1, count):
         # 将 array[j]插入到左边的有序数组中，丛右向左遍历

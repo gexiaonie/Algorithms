@@ -42,7 +42,7 @@ def merge_sorted(sequence):
             lo = hi + 1
         step *= 2
 
-        
+
 if __name__ == '__main__':
     array = [10, 11, 12, 1, 2, 3]
     merge_sorted(array)
